@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>并行归并排序分析</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #2e3d49;
+        }
+        h2 {
+            color: #3b5998;
+        }
+        p {
+            color: #555;
+        }
+        pre {
+            background-color: #e8e8e8;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        ul {
+            list-style-type: square;
+            margin-left: 20px;
+        }
+        .content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .algorithm-steps, .complexity-analysis {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <h1>并行归并排序分析</h1>
+        
+        <p>并行归并排序是一种高效的并行排序算法，利用分治法的思想，通过递归地将数组分成两半来实现排序，并在多个处理器上并行执行排序过程。最终的合并操作在合适的并行策略下，可以大大减少计算时间。</p>
+
+        <div class="algorithm-steps">
+            <h2>算法步骤</h2>
+            <p>并行归并排序的递归描述如下：</p>
+            <pre>
+MERGE-SORT(A(1), A(2), ..., A(n); B(1), B(2), ..., B(n))
+
+假设 n = 2^l，其中 l ≥ 0
+
+1. 如果 n = 1，则直接返回 B(1) := A(1)
+2. 否则，递归地并行调用 MERGE-SORT：
+    - MERGE-SORT(A(1), ..., A(n/2); C(1), ..., C(n/2))
+    - MERGE-SORT(A(n/2+1), ..., A(n); C(n/2+1), ..., C(n))
+3. 合并 (C(1), ..., C(n/2)) 和 (C(n/2 + 1), ..., C(n))，将结果存储到 B(1), ..., B(n) 中，合并的时间复杂度为 O(n)
+            </pre>
+        </div>
+
+        <div class="complexity-analysis">
+            <h2>复杂度分析</h2>
+            <p>并行归并排序的时间复杂度和工作量分析如下：</p>
+            <ul>
+                <li><strong>工作量（Work Complexity）</strong>: 由于每一层递归的合并操作都是 O(n)，而递归树的深度是 O(log n)，因此总的工作量是 O(n log n)。</li>
+                <li><strong>并行时间复杂度（Parallel Time Complexity）</strong>: 在每一层递归中，合并操作是 O(n) 的，而且合并操作是串行的。由于递归树的深度是 O(log n)，但每一层的操作可以并行执行，因此并行时间复杂度为 O(log n)。</li>
+            </ul>
+
+            <h3>总结</h3>
+            <p>并行归并排序的并行时间复杂度为 O(log n)，而工作量是 O(n log n)。这意味着该算法在有足够的处理器的情况下，能够在极短的时间内完成排序任务。</p>
+        </div>
+    </div>
+
+</body>
+</html>
